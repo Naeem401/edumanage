@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
+import useRole from '../../hooks/useRole';
 
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false); 
-
+const [role] = useRole()
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen); 
     };
@@ -28,12 +29,18 @@ console.log(user)
                         <Link to="/" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                             Home
                         </Link>
-                        <Link to="/all-class" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                        <Link to="/all-classes-for-student" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                             All Classes
                         </Link>
-                        <Link to="/teach" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                            Teach on EduManage
-                        </Link>
+                        {!(role === 'admin') ? (
+                  <Link to="/teach" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                    Teach on EduManage
+                  </Link>
+                ) : (
+                  <span className="text-gray-300 px-3 py-2 rounded-md text-sm font-medium cursor-not-allowed opacity-50">
+                    Teach on EduManage
+                  </span>
+                )}
                         {/* Conditionally render based on user authentication status */}
                         {user ? (
                             <div className="relative">

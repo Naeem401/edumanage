@@ -59,7 +59,6 @@ const Sidebar = () => {
           <div className='flex flex-col justify-between flex-1 mt-6'>
             {/*  Menu Items */}
             <nav>
-              Statistics
               {role === 'student' && <StudentMenu />}
               {role === 'teacher' && <TeacherMenu/>}
               {role === 'admin' && <AdminMenu />}
@@ -73,7 +72,7 @@ const Sidebar = () => {
           {/* Profile Menu */}
           <MenuItem
             label='Profile'
-            address='/dashboard/profile'
+            address='/dashboard'
             icon={FcSettings}
           />
 

@@ -1,54 +1,43 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Helmet } from 'react-helmet-async';
+import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
-import useAuth from '../../../hooks/useAuth';
+import { Helmet } from 'react-helmet-async';
 
-const AddClass = () => {
-  const { user, loading } = useAuth();
+const UpdateClass = () => {
+  const { id } = useParams(); // Ensure you get the id from the params
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const [submitting, setSubmitting] = useState(false);
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const { title, price, description, image, _id } = useLoaderData(); // Assuming useLoaderData provides these values
 
   const onSubmit = async (data) => {
-    setSubmitting(true);
     try {
-      const classData = {
-        title: data.title,
-        price: parseFloat(data.price),
-        description: data.description,
-        image: data.image,
-        status: 'pending', // Set the initial status to 'pending'
-        teacher: {
-          name: user.displayName,
-          email: user.email,
-        },
-      };
-
-      // Assuming your backend API endpoint for adding classes
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/addclasses`, classData);
-      console.log(response);
-      toast.success('Class Added Successfully!');
-      setSubmitting(false);
+      await axios.put(`${import.meta.env.VITE_API_URL}/class/update/${_id}`, data); // Ensure the URL is correct
+      toast.success('Class updated successfully');
       navigate('/dashboard/my-classes-list');
-    } catch (error) {
-      console.error('Error adding class:', error);
-      toast.error('Failed to add class. Please try again.');
-      setSubmitting(false);
+    } catch (err) {
+      toast.error('Failed to update class');
+      console.error(err); // Log error details for debugging
     }
   };
+
+  useEffect(() => {
+    if (title) setValue('title', title);
+    if (price) setValue('price', price);
+    if (description) setValue('description', description);
+    if (image) setValue('image', image);
+  }, [title, price, description, image, setValue]);
 
   return (
     <div className="container mx-auto px-4 sm:px-8">
       <Helmet>
-        <title>Add Class</title>
+        <title>Update Class</title>
       </Helmet>
       <div className="py-8">
-        <h1 className="text-2xl font-semibold mb-4">Add a New Class</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-4">
-          <div className="space-y-1">
+        <h1 className="text-2xl font-semibold mb-4">Update Class</h1>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700">
               Title
               <input
@@ -60,7 +49,7 @@ const AddClass = () => {
               {errors.title && <span className="text-red-500">Title is required</span>}
             </label>
           </div>
-          <div className="space-y-1">
+          <div>
             <label htmlFor="price" className="block text-sm font-medium text-gray-700">
               Price
               <input
@@ -72,7 +61,7 @@ const AddClass = () => {
               {errors.price && <span className="text-red-500">Price is required and must be non-negative</span>}
             </label>
           </div>
-          <div className="space-y-1">
+          <div>
             <label htmlFor="description" className="block text-sm font-medium text-gray-700">
               Description
               <textarea
@@ -83,7 +72,7 @@ const AddClass = () => {
               {errors.description && <span className="text-red-500">Description is required</span>}
             </label>
           </div>
-          <div className="space-y-1">
+          <div>
             <label htmlFor="image" className="block text-sm font-medium text-gray-700">
               Image URL
               <input
@@ -95,36 +84,11 @@ const AddClass = () => {
               {errors.image && <span className="text-red-500">Image URL is required</span>}
             </label>
           </div>
-          <div className="space-y-1">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-              Name
-              <input
-                id="name"
-                type="text"
-                value={user.displayName}
-                disabled
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 bg-gray-100"
-              />
-            </label>
-          </div>
-          <div className="space-y-1">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email
-              <input
-                id="email"
-                type="email"
-                value={user.email}
-                disabled
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2 bg-gray-100"
-              />
-            </label>
-          </div>
           <button
             type="submit"
-            className="col-span-2 px-4 py-2 bg-blue-600 text-white font-medium rounded-md shadow-sm hover:bg-blue-700 transition duration-300"
-            disabled={loading || submitting}
+            className="px-4 py-2 bg-blue-600 text-white font-medium rounded-md shadow-sm hover:bg-blue-700 transition duration-300"
           >
-            {submitting ? 'Adding Class...' : 'Add Class'}
+            Update Class
           </button>
         </form>
       </div>
@@ -132,4 +96,4 @@ const AddClass = () => {
   );
 };
 
-export default AddClass;
+export default UpdateClass;

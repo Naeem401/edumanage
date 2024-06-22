@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import ClassCard from '../ClassCard';
 import axios from 'axios';
 
-const AllClasses = () => {
+const AllClassesByStudent = () => {
     const [classes, setClasses] = useState([]);
 
     useEffect(() => {
@@ -12,7 +12,7 @@ const AllClasses = () => {
   
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/classes`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/classes/approved`);
         setClasses(response.data);
       } catch (error) {
         console.error('Error fetching classes:', error);
@@ -31,4 +31,4 @@ const AllClasses = () => {
     )
 };
 
-export default AllClasses;
+export default AllClassesByStudent;

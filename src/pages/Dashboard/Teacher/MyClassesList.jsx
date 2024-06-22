@@ -5,12 +5,11 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 const MyClassesList = () => {
-    const { user } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
- 
   const fetchClasses = async () => {
-    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/classes/${user.email}`);
+    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/classes/teacher/${user.email}`);
     return data;
   };
 
@@ -27,31 +26,32 @@ const MyClassesList = () => {
   // Log classes for debugging purposes
   console.log(classes);
 
- 
- //   delete
- const { mutateAsync } = useMutation({
+  // Delete mutation
+  const { mutateAsync } = useMutation({
     mutationFn: async id => {
-      const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/class/${id}`)
-      return data
+      const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/class/${id}`);
+      return data;
     },
     onSuccess: data => {
-      console.log(data)
-      refetch()
-      toast.success('Successfully deleted.')
+      console.log(data);
+      refetch();
+      toast.success('Successfully deleted.');
     },
-  })
+  });
 
-  //  Handle Delete
+  // Handle Delete
   const handleDelete = async id => {
-    console.log(id)
+    console.log(id);
     try {
-      await mutateAsync(id)
+      await mutateAsync(id);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
+
   return (
     <div className="container mx-auto px-4 sm:px-8">
       <h1 className="text-2xl font-semibold mb-4">My Classes</h1>
@@ -80,8 +80,8 @@ const MyClassesList = () => {
               </button>
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded-md"
-                // disabled={classItem.status !== 'approved'}
-                onClick={() => navigate(`/class-details/${classItem._id}`)}
+                disabled={classItem.status === 'pending'}
+                onClick={() => navigate(`/dashboard/class-details/${classItem._id}`)}
               >
                 See Details
               </button>

@@ -1,9 +1,9 @@
-import React from 'react';
+import banner from '../../assets/img/banner.avif'
 
 const Banner = () => {
     return (
         <div>
-            banner
+            <img className='max-h-[500px] w-full' src={banner} alt="" />
         </div>
     );
 };
