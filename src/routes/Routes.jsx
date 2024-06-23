@@ -22,6 +22,7 @@ import MyEnrollClassDetails from '../pages/Dashboard/Student/MyEnrollClassDetail
 import AdminRoute from './AdminRoute'
 import TeacherRoute from './TeacherRoute'
 import UserInfo from '../pages/Dashboard/UserInfo'
+import StudentRoute from './StudentRoute'
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -100,11 +101,11 @@ export const router = createBrowserRouter([
       },
       {
         path: 'myenroll-classes',
-        element: <PrivateRoute><MyEnrollClasses/></PrivateRoute>
+        element: <PrivateRoute><StudentRoute><MyEnrollClasses/></StudentRoute></PrivateRoute>
       },
       {
         path: 'myenroll-class/:id',
-        element: <PrivateRoute><MyEnrollClassDetails/></PrivateRoute>
+        element: <PrivateRoute><StudentRoute><MyEnrollClassDetails/></StudentRoute></PrivateRoute>
       }
     ]
   }

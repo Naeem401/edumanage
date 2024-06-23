@@ -3,6 +3,7 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const fetchClasses = async () => {
   const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/classes`);
@@ -55,6 +56,9 @@ const AllClasses = () => {
 
   return (
     <div className="container mx-auto px-4 sm:px-8">
+      <Helmet>
+        <title>All Classes - EduManage</title>
+      </Helmet>
       <h1 className="text-2xl font-semibold mb-4">All Classes</h1>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-200">

@@ -27,87 +27,13 @@ const CheckoutForm = ({ enrollmentInfo, closeModal }) => {
         }
 
     }, [totalPrice])
-
-  // const handleSubmit = async event => {
-  //   event.preventDefault();
-  //   setProcessing(true);
-
-  //   if (!stripe || !elements) {
-  //     return;
-  //   }
-
-  //   const card = elements.getElement(CardElement);
-
-  //   if (!card) {
-  //     return;
-  //   }
-
-  //   // Create payment method using Stripe.js
-  //   const { error, paymentMethod } = await stripe.createPaymentMethod({
-  //     type: 'card',
-  //     card,
-  //   });
-
-  //   if (error) {
-  //     console.error('[Error creating payment method]', error);
-  //     setCardError(error.message);
-  //     setProcessing(false);
-  //     return;
-  //   }
-
-  //   // Confirm payment using client secret and payment method
-  //   const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
-  //     payment_method: {
-  //       card: card,
-  //       billing_details: {
-  //         email: user?.email,
-  //         name: user?.displayName,
-  //       },
-  //     },
-  //   });
-
-  //   if (confirmError) {
-  //     console.error('[Error confirming payment]', confirmError);
-  //     setCardError(confirmError.message);
-  //     setProcessing(false);
-  //     return;
-  //   }
-
-  //   if (paymentIntent.status === 'succeeded') {
-  //     // Prepare enrollment data to send to backend
-  //     const enrollmentData = {
-  //       ...enrollmentInfo,
-  //       paymentInfo: {
-  //         paymentMethodId: paymentMethod.id,
-  //         cardBrand: paymentMethod.card.brand,
-  //         cardLast4: paymentMethod.card.last4,
-  //       },
-  //     };
-
-  //     try {
-  //       // Send enrollment data to backend to enroll user in class
-  //       const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/enroll`, enrollmentData);
-  //       console.log('Enrollment response:', data);
-
-  //       // Handle success scenario
-  //       closeModal();
-  //       toast.success('Enrolled successfully');
-  //       navigate('/dashboard/my-enrollments');
-  //     } catch (error) {
-  //       console.error('Error enrolling user:', error);
-  //       toast.error('Failed to enroll. Please try again.');
-  //     }
-  //   }
-
-  //   setProcessing(false);
-  // };
-
    const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (!stripe || !elements) {
             return
         }
+        setProcessing(true);
 
         const card = elements.getElement(CardElement)
 
@@ -123,6 +49,7 @@ const CheckoutForm = ({ enrollmentInfo, closeModal }) => {
         if (error) {
             console.log('payment error', error);
             setCardError(error.message);
+            setProcessing(false)
         }
         else {
             console.log('payment method', paymentMethod)
@@ -142,6 +69,7 @@ const CheckoutForm = ({ enrollmentInfo, closeModal }) => {
 
         if (confirmError) {
             console.log('confirm error')
+            setProcessing(false);
         }
         else {
             console.log('payment intent', paymentIntent)

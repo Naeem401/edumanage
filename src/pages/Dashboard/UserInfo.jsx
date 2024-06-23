@@ -1,12 +1,16 @@
 
 import useRole from '../../hooks/useRole';
 import useAuth from '../../hooks/useAuth';
+import { Helmet } from 'react-helmet';
 
 const UserInfo = () => {
   const {user} = useAuth()
 const [role] = useRole();
   return (
    <div className='h-screen flex justify-center items-center w-full'>
+    <Helmet>
+                <title>My Profile - EduManage</title>
+            </Helmet>
      <div className="flex flex-col items-center w-full p-6 bg-white rounded-lg shadow-lg">
     <img
       className="w-24 h-24 rounded-full mb-4"

@@ -25,7 +25,7 @@ const ManageUsers = () => {
     <>
       <div className='container mx-auto px-4 sm:px-8'>
         <Helmet>
-          <title>Manage Users</title>
+          <title>Manage Users - EduManage</title>
         </Helmet>
         <div className='py-8'>
           <input

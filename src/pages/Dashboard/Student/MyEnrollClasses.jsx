@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import useAuth from '../../../hooks/useAuth';
+import { Helmet } from 'react-helmet';
 
 const MyEnrollClasses = () => {
   const { user } = useAuth();
@@ -18,6 +19,9 @@ const MyEnrollClasses = () => {
 console.log(classes)
   return (
     <div className="my-enroll-classes bg-gray-100 min-h-screen py-8">
+      <Helmet>
+        <title>My Enrolled Classes - EduManage</title>
+      </Helmet>
       <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">My Enrolled Classes</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {classes.map((cls) => (

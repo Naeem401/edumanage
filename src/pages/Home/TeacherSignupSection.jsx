@@ -4,14 +4,19 @@ import { Link } from 'react-router-dom';
 const TeacherSignupSection = () => {
     return (
        <div className=' bg-gray-100'>
-         <h2 className='text-center font-bold text-3xl p-6'>Become a Teacher</h2>
-         <div className='flex justify-center items-center p-6'>
+         <h2 className='text-center font-bold text-3xl p-6 underline'>Join as a Teacher</h2>
+         <p className="text-gray-600 px-8 mt-4 text-center max-w-[70%] mx-auto">
+         Inspire and educate by joining our community as a teacher. On the left side, an image represents our vibrant teaching environment. On the right, learn about the benefits of teaching with us and how you can make a difference. Click the "Start Teaching Today" button to get started and be redirected to the Teach on Edumanage page.
+         </p>
+         <div className="flex flex-col md:flex-row items-center justify-between p-10 bg-gray-100">
+          <div className="w-full md:w-1/2">
           <img
             src={teacher}
             alt="Teacher Join Image"
-            className="rounded-lg shadow-lg w-1/3"
+            className="rounded-lg shadow-lg min-h-[350px]"
           />
-        <div className="bg-white p-10 py-20">
+          </div>
+        <div className="bg-white shadow-lg rounded-lg py-20 px-6 mb-6 md:mb-0 md:mr-6 w-full md:w-1/2 min-h-[410px]">
           <h2 className="text-2xl font-bold mb-4">Become a Teacher</h2>
           <p className="mb-4">
             Are you passionate about teaching? <br /> Join us and start sharing your knowledge today.

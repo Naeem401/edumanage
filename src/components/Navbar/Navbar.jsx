@@ -2,20 +2,24 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import useRole from '../../hooks/useRole';
+import { MdClose, MdMenu } from "react-icons/md";
 
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false); 
-const [role] = useRole()
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false)
+    const [role] = useRole()
     const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen); 
+        setIsDropdownOpen(!isDropdownOpen);
     };
-
+    const menuOpen = () => {
+        setIsOpen(!isOpen)
+    }
     const handleLogout = () => {
-        logOut(); 
+        logOut();
     };
-console.log(user)
+    console.log(user)
     return (
         <nav className="bg-gray-800">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -26,7 +30,7 @@ console.log(user)
                         </Link>
                     </div>
                     <div className="hidden md:flex md:items-center">
-                        <Link to="/" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+             <Link to="/" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                             Home
                         </Link>
                         <Link to="/all-classes-for-student" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
@@ -77,6 +81,59 @@ console.log(user)
                                 Sign In
                             </Link>
                         )}
+        </div>
+
+                    {/* for Mobile */}
+                    <div className='md:hidden'>
+                        <button onClick={menuOpen}>
+                            {
+                                isOpen ? <MdClose className='text-white text-2xl' /> : <MdMenu className='text-white text-2xl' />
+                            }
+                        </button>
+                        <div className={`absolute flex flex-col items-center top-16 bg-black bg-opacity-30 h-screen px-8 py-4 w-[40%] transition-all duration-300 ease-in-out ${isOpen ? 'right-0' : '-right-56 hidden'}`}>
+                       {
+                        user && <div>
+                            {/* Render user profile picture */}
+                            <img
+                                        className="h-8 w-8 rounded-full mx-auto"
+                                        src={user.photoURL}
+                                        alt="User Profile"
+                                    />
+                                    <ul>
+                                        <li className='text-white'>{user.displayName}</li>
+                                    </ul>
+                        </div>
+                       }
+                       <Link to="/" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            Home
+                        </Link>
+                        <Link to="/all-classes-for-student" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                            All Classes
+                        </Link>
+                        {!(role === 'admin') ? (
+                  <Link to="/teach" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-center">
+                    Teach on EduManage
+                  </Link>
+                ) : (
+                  <span className="text-gray-300 px-3 py-2 rounded-md text-sm font-medium cursor-not-allowed opacity-50">
+                    Teach on EduManage
+                  </span>
+                )}
+                {
+                    user ? (
+                        <div>
+                            <Link to="/dashboard" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" role="menuitem">Dashboard</Link>
+                            <button onClick={handleLogout} className="block w-full text-center px-4 py-2 text-sm text-white" role="menuitem">Logout</button>
+                        </div>
+                    ) : (
+                         // Sign In button (if not logged in)
+                         <Link to="/login" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                         Sign In
+                     </Link>
+                     
+                    )
+                }
+                        </div>
                     </div>
                 </div>
             </div>

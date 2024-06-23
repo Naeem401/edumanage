@@ -22,8 +22,8 @@ const FeedbackSection = () => {
       }, []);
 
     return (
-        <div className="w-1/2 mx-auto">
-            <h2 className='text-center font-bold text-3xl mb-8'>Students Feedback</h2>
+        <div className="w-2/3 mx-auto">
+            <h2 className='text-center font-bold text-3xl mb-8 underline'>Students Feedback</h2>
             <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
                 {
                     feedback.map(feed => <SwiperSlide key={feed._id}>

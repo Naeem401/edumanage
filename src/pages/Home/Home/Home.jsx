@@ -5,9 +5,13 @@ import HighlightedClassesSection from '../HighlightedClassesSection';
 import FeedbackSection from '../FeedbackSection';
 import WebsiteStatsSection from '../WebsiteStatsSection';
 import TeacherSignupSection from '../TeacherSignupSection';
+import { Helmet } from 'react-helmet';
 const Home = () => {
     return (
-        <div>
+        <div className='bg-gray-100'>
+             <Helmet>
+                <title>Edumanage - Home</title>
+            </Helmet>
             <Banner/>
             <PartnersSection/>
             <HighlightedClassesSection/>

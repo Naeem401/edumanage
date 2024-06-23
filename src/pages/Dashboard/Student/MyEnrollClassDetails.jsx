@@ -4,6 +4,7 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import ReactStars from 'react-rating-stars-component';
 import useAuth from '../../../hooks/useAuth';
+import { Helmet } from 'react-helmet';
 
 const MyEnrollClassDetails = () => {
   const { id } = useParams();
@@ -59,6 +60,10 @@ const MyEnrollClassDetails = () => {
 
   return (
     <div className="my-enroll-class-details p-6 bg-gray-100 min-h-screen">
+      <Helmet>
+        <title>{classDetails.title || 'Class Details'} - Edumanage</title>
+      </Helmet>
+
       <h2 className="text-3xl font-bold text-gray-800 mb-4">{classDetails.title}</h2>
       <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
         <thead className="bg-gray-800 text-white">

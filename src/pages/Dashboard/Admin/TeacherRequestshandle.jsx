@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
+import toast from 'react-hot-toast';
 
 const TeacherRequestshandle = () => {
   const [teacherRequests, setTeacherRequests] = useState([]);
@@ -25,8 +27,10 @@ const TeacherRequestshandle = () => {
         request._id === id ? { ...request, status: 'accepted' } : request
       );
       setTeacherRequests(updatedRequests);
+      toast.success('Request Approve')
     } catch (error) {
       console.error('Failed to approve request:', error);
+      toast.error('Failed to approve request')
     }
   };
 
@@ -38,13 +42,18 @@ const TeacherRequestshandle = () => {
         request._id === id ? { ...request, status: 'rejected' } : request
       );
       setTeacherRequests(updatedRequests);
+      toast.success('Rejected')
     } catch (error) {
       console.error('Failed to reject request:', error);
+      toast.error('Failed to reject request')
     }
   };
 
   return (
     <div className="container mx-auto px-4 sm:px-8 py-8">
+      <Helmet>
+        <title>Teacher Requests - Your Website Name</title>
+      </Helmet>
       <h2 className="text-2xl font-bold mb-6">Teacher Requests</h2>
       <div className="overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <table className="min-w-full divide-y divide-gray-200">
